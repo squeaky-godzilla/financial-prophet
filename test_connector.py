@@ -1,5 +1,5 @@
 from os import environ
-from data_connectors import StockAlphaVantage
+from data_connectors import StockAlphaVantage, CryptoAlphaVantage, CryptoWatchREST
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,12 +13,24 @@ ALPHAVANTAGE_APIKEY = environ['ALPHAVANTAGE_APIKEY']
 #     ALPHAVANTAGE_APIKEY
 #     )
 
-hist_price_class = StockAlphaVantage.get_daily(
-    'MSFT',
-    'full',
+# hist_price = StockAlphaVantage.get_daily(
+#     'MSFT',
+#     'full',
+#     ALPHAVANTAGE_APIKEY
+# )
+
+df = CryptoAlphaVantage.get_daily(
+    'XRP',
+    'EUR',
     ALPHAVANTAGE_APIKEY
 )
 
+cw_df_dict = CryptoWatchREST.get_ohlc('kraken','btc','eur',['300'])
+
 # print (hist_price)
-print (hist_price_class)
+
+print(df)
+
 import pdb; pdb.set_trace()
+
+

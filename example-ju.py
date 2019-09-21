@@ -1,13 +1,30 @@
 #%%
 import pandas as pd
 from fbprophet import Prophet
+from data_connectors import CryptoAlphaVantage
+from data_manglers import ProphetTools
+import dotenv
+from os import environ
 
 #%%
-df = pd.read_csv('example.csv')
-df.head()
+
+dotenv.load_dotenv()
+
+ALPHAVANTAGE_APIKEY = environ['ALPHAVANTAGE_APIKEY']
+
+
+hist_crypto_price = CryptoAlphaVantage.get_daily(
+    'XRP',
+    'EUR',
+    ALPHAVANTAGE_APIKEY
+)
+
+df = ProphetTools.prophetify(hist_crypto_price, 'close')
+
 
 #%%
 m = Prophet()
+print(dir(m))
 m.fit(df)
 
 #%%

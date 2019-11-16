@@ -1,0 +1,8 @@
+title: brokerbot high-level operation
+
+brokerbot -> data\nconnector: get OHLC
+data\nconnector -> data API: get OHLC
+data API -> data\nconnector: return JSON data
+data\nconnector -> brokerbot: return Pandas DF
+note left of brokerbot: apply strategy & decide\nBUY or SELL or WAIT
+brokerbot -> order\nconnector: create order\n(BUY or SELL)
